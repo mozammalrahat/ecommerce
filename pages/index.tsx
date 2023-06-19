@@ -1,3 +1,159 @@
+import dynamic from "next/dynamic";
+const PopupModal = dynamic(() => import("@/components/PopupModal"), {
+  ssr: false,
+});
+import { useState } from "react";
+const products = [
+  {
+    id: 1,
+    name: "Product 1",
+    href: "#",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    price: "$35",
+    color: "Black",
+  },
+  {
+    id: 2,
+    name: "Product 2",
+    href: "#",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    price: "$350",
+    color: "Black",
+  },
+  {
+    id: 3,
+    name: "Product 3",
+    href: "#",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    price: "$445",
+    color: "Black",
+  },
+  {
+    id: 4,
+    name: "Product 4",
+    href: "#",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    price: "$3555",
+    color: "Black",
+  },
+  {
+    id: 5,
+    name: "Product 5",
+    href: "#",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    price: "$45435",
+    color: "Black",
+  },
+  {
+    id: 6,
+    name: "Product 6",
+    href: "#",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    price: "$364645",
+    color: "Black",
+  },
+  {
+    id: 7,
+    name: "Product 7",
+    href: "#",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    price: "$3465645",
+    color: "Black",
+  },
+  {
+    id: 8,
+    name: "Product 8",
+    href: "#",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    price: "$999",
+    color: "Black",
+  },
+  // Add more products with different names as needed
+];
+
+interface Product {
+  id: number;
+  name: string;
+  href: string;
+  imageSrc: string;
+  imageAlt: string;
+  price: string;
+  color: string;
+}
+
 export default function Home() {
-  return <h1>Ecommerce Site</h1>;
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const openProductModal = (product: Product) => {
+    setSelectedProduct(product);
+    setIsOpen(true);
+  };
+
+  const closeProductModal = () => {
+    setSelectedProduct(null);
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="bg-white">
+      {selectedProduct === null && (
+        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+            {products.map((product) => (
+              <div
+                onClick={() => openProductModal(product)}
+                key={product.id}
+                className="group relative"
+              >
+                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                  <img
+                    src={product.imageSrc}
+                    alt={product.imageAlt}
+                    className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                  />
+                </div>
+                <div className="mt-4 flex justify-between">
+                  <div>
+                    <h3 className="text-sm text-gray-700">
+                      <span aria-hidden="true" className="absolute inset-0" />
+                      {product.name}
+                    </h3>
+                    <p className="mt-1 text-sm text-gray-500">
+                      {product.color}
+                    </p>
+                  </div>
+                  <p className="text-sm font-medium text-gray-900">
+                    {product.price}
+                  </p>
+                  {/* <button onClick={() => openProductModal()}>Details</button> */}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <PopupModal
+        isOpen={isOpen}
+        onClose={closeProductModal}
+        product={selectedProduct}
+      ></PopupModal>
+    </div>
+  );
 }
