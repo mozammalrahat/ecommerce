@@ -1,133 +1,74 @@
 import React from "react";
+import SubmitButton from "../SubmitButton";
 
 type Customer = {
   id: string;
-  name: string;
-  email: string;
+  role: string;
   phone: string;
 };
 
 const customers: Customer[] = [
   {
     id: "1",
-    name: "John Doe",
-    email: "john.doe@example.com",
+    role: "user",
     phone: "1234567890",
   },
   {
     id: "277",
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
+    role: "user",
     phone: "9876543210",
   },
   {
     id: "11212",
-    name: "John Doe",
-    email: "john.doe@example.com",
+    role: "user",
     phone: "1234567890",
   },
   {
     id: "222",
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
+    role: "user",
     phone: "9876543210",
   },
   {
     id: "111",
-    name: "John Doe",
-    email: "john.doe@example.com",
+    role: "user",
     phone: "1234567890",
   },
   {
     id: "212",
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
+    role: "user",
     phone: "9876543210",
   },
   {
     id: "121",
-    name: "John Doe",
-    email: "john.doe@example.com",
+    role: "user",
     phone: "1234567890",
   },
   {
     id: "21",
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
+    role: "user",
     phone: "9876543210",
   },
   {
     id: "18",
-    name: "John Doe",
-    email: "john.doe@example.com",
+    role: "user",
     phone: "1234567890",
   },
   {
     id: "232323",
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
+    role: "user",
     phone: "9876543210",
   },
   {
     id: "1000",
-    name: "John Doe",
-    email: "john.doe@example.com",
+    role: "user",
     phone: "1234567890",
   },
   {
     id: "298",
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
+    role: "admin",
     phone: "9876543210",
   },
-  {
-    id: "100",
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "1234567890",
-  },
-  {
-    id: "29",
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
-    phone: "9876543210",
-  },
-  {
-    id: "19",
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "1234567890",
-  },
-  {
-    id: "27",
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
-    phone: "9876543210",
-  },
-  {
-    id: "14",
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "1234567890",
-  },
-  {
-    id: "22",
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
-    phone: "9876543210",
-  },
-  {
-    id: "11",
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "1234567890",
-  },
-  {
-    id: "2",
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
-    phone: "9876543210",
-  },
+
   // Add more demo customers here
 ];
 
@@ -146,6 +87,9 @@ const CustomersList: React.FC = () => {
                 Phone
               </th>
               <th className="items-center py-2 px-4 border-b text-center">
+                Role
+              </th>
+              <th className="items-center py-2 px-4 border-b text-center">
                 Actions
               </th>
             </tr>
@@ -158,6 +102,9 @@ const CustomersList: React.FC = () => {
                 </td>
                 <td className="items-center py-2 px-4 border-b text-center">
                   {customer.phone}
+                </td>
+                <td className="items-center py-2 px-4 border-b text-center">
+                  {customer.role}
                 </td>
                 <td className="items-center py-2 px-4 border-b text-center">
                   <button
@@ -174,21 +121,29 @@ const CustomersList: React.FC = () => {
       </div>
 
       <div className="mt-4">
-        <h3 className="text-lg font-bold mb-2">Add Customer</h3>
+        <h3 className="text-lg font-bold mb-2">Add Customer or Admin</h3>
         <div className="flex items-center">
-          <input
-            placeholder="Customer Phone"
-            type="text"
-            className="border border-gray-300 rounded px-4 py-2 mr-2"
-          />
-          <input
-            placeholder="Password"
-            type="text"
-            className="border border-gray-300 rounded px-4 py-2 mr-2"
-          />
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 px-1 rounded">
-            Add Customer
-          </button>
+          <div className="flex flex-col mr-2">
+            <input
+              placeholder="Customer Phone"
+              type="text"
+              className="border border-gray-300 rounded px-4 py-2 mb-2"
+            />
+            <input
+              placeholder="Password"
+              type="text"
+              className="border border-gray-300 rounded px-4 py-2 mb-2"
+            />
+          </div>
+          <select className="border border-gray-300 rounded px-4 py-2 mr-2">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div className="mt-4">
+          <SubmitButton onClick={() => null}>
+            Add Customer or Admin
+          </SubmitButton>
         </div>
       </div>
     </div>
