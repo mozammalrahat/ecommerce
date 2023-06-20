@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import SubmitButton from "./SubmitButton";
-import { Router } from "next/router";
-import { CartContext, CartContextType } from "@/CartProvider";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { CartContext, CartContextType } from "../CartProvider";
 
 interface Product {
   id: number;
@@ -36,7 +37,7 @@ const Cart: React.FC<CartProps> = ({ onClose, user }) => {
       setAddress(e.target.value);
     }
   };
-  const handleOrder = (e) => {
+  const handleOrder = async (e: any) => {
     e.preventDefault();
     console.log("user is :", user);
     const order = {
@@ -46,6 +47,16 @@ const Cart: React.FC<CartProps> = ({ onClose, user }) => {
       cart,
     };
     console.log("order", order);
+    await axios
+      .post("http://localhost:3000/api/orders/order", order, {
+        headers: {
+          Authorization: Cookies.get("token"),
+        },
+      })
+      .then((res) => {
+        dispatch({ type: "CLEAR_CART" });
+        onClose();
+      });
   };
 
   const removeProduct = (productId: number) => {
@@ -71,11 +82,13 @@ const Cart: React.FC<CartProps> = ({ onClose, user }) => {
               Name
             </label>
             <input
+              onChange={onChangehandler}
               className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
               id="name"
               name="name"
               type="text"
-              required=""
+              value={name}
+              // required=""
               placeholder="Your Name"
               aria-label="Name"
             />
@@ -85,11 +98,13 @@ const Cart: React.FC<CartProps> = ({ onClose, user }) => {
               Address
             </label>
             <input
+              onChange={onChangehandler}
+              value={address}
               class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
               id="address"
               name="address"
               type="text"
-              required=""
+              // required=""
               placeholder="Street"
               aria-label="Email"
             />
