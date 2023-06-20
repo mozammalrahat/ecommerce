@@ -18,16 +18,7 @@ interface Action {
   payload: Product;
 }
 
-const initialState: Product[] = [
-  {
-    id: 1,
-    name: "Product 1",
-    price: "$35",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    quantity: 1,
-  },
-];
+const initialState: Product[] = [];
 
 const cartReducer = (state: Product[], action: Action) => {
   switch (action.type) {

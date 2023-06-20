@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import SubmitButton from "../SubmitButton";
 import OrderPopupModal from "./OrderPopupModal";
 
@@ -23,77 +24,28 @@ type Order = {
   phone: string;
   items: Item[];
   totalPrice: string;
-  status: string;
-  totalProduct: number; // Added the totalProduct field
+  totalQuantity: number;
+  name: string;
 };
-
-const Orders: Order[] = [
-  {
-    id: "1",
-    customerId: "1",
-    phone: "1234567890",
-    items: [
-      {
-        product: {
-          id: 1,
-          name: "Product 1",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-          imageAlt: "Product 1",
-          price: "$35",
-          color: "Red",
-        },
-        quantity: 2,
-      },
-      {
-        product: {
-          id: 2,
-          name: "Product 2",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-          imageAlt: "Product 2",
-          price: "$350",
-          color: "Blue",
-        },
-        quantity: 1,
-      },
-    ],
-    totalPrice: "$420",
-    status: "Pending",
-    totalProduct: 3, // Added the totalProduct value
-  },
-  {
-    id: "2",
-    customerId: "2",
-    phone: "9876543210",
-    items: [
-      {
-        product: {
-          id: 3,
-          name: "Product 3",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-          imageAlt: "Product 3",
-          price: "$445",
-          color: "Green",
-        },
-        quantity: 3,
-      },
-      // Add more products here if needed
-    ],
-    totalPrice: "$1335",
-    status: "Delivered",
-    totalProduct: 3, // Added the totalProduct value
-  },
-  // Add more orders here if needed
-];
 
 const OrderList: React.FC = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [orders, setOrders] = useState<Order[]>([]);
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get("/api/orders");
+      // console.log("Orders:", response.data.orders);
+      setOrders(response.data.orders);
+    } catch (error) {
+      console.log("Error fetching orders:", error);
+    }
+  };
+
   const openOrderModal = (order: Order) => {
     setSelectedOrder(order);
     setIsOpen(true);
@@ -112,36 +64,43 @@ const OrderList: React.FC = () => {
           <thead>
             <tr>
               <th className="items-center py-2 px-4 border-b text-center">
-                Order ID
+                Phone
               </th>
               <th className="items-center py-2 px-4 border-b text-center">
-                User ID
+                Name
               </th>
               <th className="items-center py-2 px-4 border-b text-center">
-                Total Amount
+                Address
               </th>
               <th className="items-center py-2 px-4 border-b text-center">
                 Total Product
               </th>
+              <th className="items-center py-2 px-4 border-b text-center">
+                Total Price
+              </th>
+
               <th className="items-center py-2 px-4 border-b text-center">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody>
-            {Orders.map((order) => (
+            {orders.map((order) => (
               <tr key={order.id} onClick={() => openOrderModal(order)}>
                 <td className="items-center py-2 px-4 border-b text-center">
-                  {order.id}
+                  {order.phone}
                 </td>
                 <td className="items-center py-2 px-4 border-b text-center">
-                  {order.customerId}
+                  {order.name}
+                </td>
+                <td className="items-center py-2 px-4 border-b text-center">
+                  {order.address}
+                </td>
+                <td className="items-center py-2 px-4 border-b text-center">
+                  {order.totalQuantity}
                 </td>
                 <td className="items-center py-2 px-4 border-b text-center">
                   {order.totalPrice}
-                </td>
-                <td className="items-center py-2 px-4 border-b text-center">
-                  {order.totalProduct}
                 </td>
                 <td className="items-center py-2 px-4 border-b text-center">
                   <button

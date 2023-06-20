@@ -74,52 +74,49 @@ const OrderPopupModal: React.FC<PopupModalProps> = ({
               <h3 className="text-lg font-medium mb-4">Order Details</h3>
               <div className="flex flex-col mb-6">
                 <div className="flex">
-                  <span className="font-medium">Order ID:</span>
-                  <span className="text-gray-700 ml-2">{order.id}</span>
-                </div>
-                <div className="flex">
-                  <span className="font-medium">Customer ID:</span>
-                  <span className="text-gray-700 ml-2">{order.customerId}</span>
-                </div>
-                <div className="flex">
-                  <span className="font-medium">Phone:</span>
+                  <span className="font-medium">Customer Phone:</span>
                   <span className="text-gray-700 ml-2">{order.phone}</span>
+                </div>
+                <div className="flex">
+                  <span className="font-medium">Customer Name:</span>
+                  <span className="text-gray-700 ml-2">{order.name}</span>
+                </div>
+                <div className="flex">
+                  <span className="font-medium">Address:</span>
+                  <span className="text-gray-700 ml-2">{order.address}</span>
                 </div>
                 <div className="flex">
                   <span className="font-medium">Total Products:</span>
                   <span className="text-gray-700 ml-2">
-                    {order.totalProduct}
+                    {order.totalQuantity}
                   </span>
                 </div>
                 <div className="flex">
                   <span className="font-medium">Total Price:</span>
                   <span className="text-gray-700 ml-2">{order.totalPrice}</span>
                 </div>
-                <div className="flex">
-                  <span className="font-medium">Status:</span>
-                  <span className="text-gray-700 ml-2">{order.status}</span>
-                </div>
               </div>
             </div>
             <div className="w-1/2">
               <h3 className="text-lg font-medium mb-4">Order Items</h3>
               <div className="flex flex-col">
-                {order.items.map((item) => (
-                  <div key={item.product.id} className="flex items-center mb-4">
+                {order.cart.map((item) => (
+                  <div key={item.id} className="flex items-center mb-4">
                     <img
-                      src={item.product.imageSrc}
-                      alt={item.product.imageAlt}
+                      src={item.imageSrc}
+                      // alt={item.imageAlt}
                       className="h-10 w-10 object-cover rounded-full"
                     />
                     <div className="ml-4">
                       <div className="text-sm text-gray-700 font-medium">
-                        {item.product.name}
+                        {item.name}
                       </div>
-                      <div className="text-sm text-gray-500">
-                        {item.product.color}
-                      </div>
+                      <div className="text-sm text-gray-500">{item.color}</div>
                       <div className="text-sm text-gray-500">
                         Quantity: {item.quantity}
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        Price: {item.price}
                       </div>
                     </div>
                   </div>
