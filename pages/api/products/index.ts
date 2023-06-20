@@ -25,7 +25,6 @@ export default async function handler(
         const fileData = fs.readFileSync(filePath, "utf-8");
         products = fileData ? JSON.parse(fileData) : [];
       }
-      console.log("products", products);
 
       res.status(200).json({ products });
     } catch (err) {

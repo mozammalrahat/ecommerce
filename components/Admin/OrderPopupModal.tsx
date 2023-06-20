@@ -125,18 +125,6 @@ const OrderPopupModal: React.FC<PopupModalProps> = ({
             </div>
           </div>
         )}
-        <div className="flex justify-center mt-4">
-          <button
-            onClick={() => {}}
-            className={`px-4 py-2 rounded-md ${
-              buttonText === "Delete"
-                ? "bg-red-500 hover:bg-red-600"
-                : "bg-blue-500 hover:bg-blue-600"
-            } text-white`}
-          >
-            {buttonText}
-          </button>
-        </div>
       </div>
     </div>
   );

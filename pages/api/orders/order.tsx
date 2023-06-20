@@ -43,6 +43,7 @@ export default async function handler(
         orders = fileData ? JSON.parse(fileData) : [];
       }
       console.log("order", order);
+      order.id = Date.now();
       orders.push(order);
 
       fs.writeFileSync(filePath, JSON.stringify(orders));

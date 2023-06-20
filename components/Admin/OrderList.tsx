@@ -78,10 +78,6 @@ const OrderList: React.FC = () => {
               <th className="items-center py-2 px-4 border-b text-center">
                 Total Price
               </th>
-
-              <th className="items-center py-2 px-4 border-b text-center">
-                Actions
-              </th>
             </tr>
           </thead>
           <tbody>
@@ -102,17 +98,6 @@ const OrderList: React.FC = () => {
                 <td className="items-center py-2 px-4 border-b text-center">
                   {order.totalPrice}
                 </td>
-                <td className="items-center py-2 px-4 border-b text-center">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                    type="button"
-                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700"
-                  >
-                    Delete
-                  </button>
-                </td>
               </tr>
             ))}
           </tbody>
@@ -123,7 +108,7 @@ const OrderList: React.FC = () => {
         isOpen={isOpen}
         onClose={closeOrderModal}
         order={selectedOrder} // Pass the order object here
-        buttonText={"Delete"}
+        buttonText={"Disable"}
       />
     </div>
   );

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SubmitButton from "../SubmitButton";
 import PopupModal from "../PopupModal";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 type Product = {
   id: number;
@@ -14,6 +15,9 @@ type Product = {
 };
 
 const ProductList: React.FC = () => {
+  const [productName, setProductName] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [productColor, setProductColor] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +31,39 @@ const ProductList: React.FC = () => {
       setProducts(data.products);
     } catch (error) {
       console.log("Error fetching products:", error);
+    }
+  };
+
+  const onFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "name") {
+      setProductName(e.target.value);
+    } else if (e.target.name === "price") {
+      setProductPrice(e.target.value);
+    } else if (e.target.name === "color") {
+      setProductColor(e.target.value);
+    }
+  };
+  const handleProductSubmit = async () => {
+    const product = {
+      name: productName,
+      price: productPrice,
+      color: productColor,
+    };
+    console.log("The product is : ", product);
+    try {
+      axios
+        .post("/api/products/product", product, {
+          headers: {
+            Authorization: Cookies.get("token"),
+          },
+        })
+        .then((res) => {
+          console.log("res.data.products", res.data.products);
+          setProducts(res.data.products);
+          console.log("Product added successfully");
+        });
+    } catch (error) {
+      console.log("Error adding product:", error);
     }
   };
 
@@ -61,9 +98,6 @@ const ProductList: React.FC = () => {
               <th className="items-center py-2 px-4 border-b text-center">
                 Color
               </th>
-              <th className="items-center py-2 px-4 border-b text-center">
-                Actions
-              </th>
             </tr>
           </thead>
           <tbody>
@@ -92,15 +126,6 @@ const ProductList: React.FC = () => {
                   <td className="items-center py-2 px-4 border-b text-center">
                     {product.color}
                   </td>
-                  <td className="items-center py-2 px-4 border-b text-center">
-                    <button
-                      onClick={(e) => e.stopPropagation()}
-                      type="button"
-                      className="focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700"
-                    >
-                      Delete
-                    </button>
-                  </td>
                 </tr>
               </React.Fragment>
             ))}
@@ -119,11 +144,15 @@ const ProductList: React.FC = () => {
         <div className="flex items-center">
           <div className="flex flex-col mr-2">
             <input
+              name="name"
+              onChange={onFieldChange}
               placeholder="Product Name"
               type="text"
               className="border border-gray-300 rounded px-4 py-2 mb-2"
             />
             <input
+              name="price"
+              onChange={onFieldChange}
               placeholder="Price"
               type="text"
               className="border border-gray-300 rounded px-4 py-2"
@@ -131,12 +160,15 @@ const ProductList: React.FC = () => {
           </div>
           <div className="flex flex-col mr-2">
             <input
+              name="image"
               placeholder="Image URL"
               type="file"
               accept="image/*"
               className="border border-gray-300 rounded px-4 py-2 mb-2"
             />
             <input
+              name="color"
+              onChange={onFieldChange}
               placeholder="Color"
               type="text"
               className="border border-gray-300 rounded px-4 py-2"
@@ -144,7 +176,9 @@ const ProductList: React.FC = () => {
           </div>
         </div>
         <div className="mt-4">
-          <SubmitButton onClick={() => null}>Add Product</SubmitButton>
+          <SubmitButton onClick={() => handleProductSubmit()}>
+            Add Product
+          </SubmitButton>
         </div>
       </div>
     </div>
