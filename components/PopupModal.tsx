@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { CartContext, CartContextType } from "../CartProvider";
 interface PopupModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -9,9 +9,9 @@ interface PopupModalProps {
 interface Product {
   id: number;
   name: string;
-  href: string;
+  href?: string;
   imageSrc: string;
-  imageAlt: string;
+  imageAlt?: string;
   price: string;
   color: string;
 }
@@ -23,7 +23,8 @@ const PopupModal: React.FC<PopupModalProps> = ({
   buttonText,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
-
+  const cartContext = useContext(CartContext) as CartContextType;
+  const { dispatch } = cartContext;
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (
@@ -40,6 +41,23 @@ const PopupModal: React.FC<PopupModalProps> = ({
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [onClose]);
+
+  const handleAddToCart = () => {
+    if (product) {
+      const { id, name, price, imageSrc, color } = product;
+      const newProduct: Product = {
+        id,
+        name,
+        price,
+        imageSrc,
+        color,
+      };
+      console.log("The new product is : ", newProduct);
+
+      dispatch({ type: "ADD_TO_CART", payload: newProduct });
+      // setAddedToCart(true);
+    }
+  };
 
   return (
     <div
@@ -86,7 +104,7 @@ const PopupModal: React.FC<PopupModalProps> = ({
           </div>
         </div>
         <button
-          onClick={() => {}}
+          onClick={handleAddToCart}
           className={`mt-4 px-4 py-2 rounded-md  ${
             buttonText === "Delete"
               ? "bg-red-500 hover:bg-red-600"

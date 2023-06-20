@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { CartIcon } from "./cartIcon";
 import Cart from "./Cart";
+import { CartContext } from "../CartProvider";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const cartContext = useContext(CartContext);
+  const { cart } = cartContext;
+  const getTotalCartItems = () => {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    return totalItems > 0 ? totalItems : null;
+  };
 
   return (
     <>
@@ -20,7 +27,7 @@ const Navbar = () => {
           <li>
             <div className="flex items-center justify-between">
               <button onClick={() => setOpen(true)} className="text-gray-800">
-                Cart
+                Cart {getTotalCartItems() && `(${getTotalCartItems()})`}
               </button>
               <CartIcon />
             </div>

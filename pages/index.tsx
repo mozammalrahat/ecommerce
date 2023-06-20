@@ -5,6 +5,7 @@ const PopupModal = dynamic(() => import("@/components/PopupModal"), {
 import { useContext, useState } from "react";
 import { CartContext } from "../CartProvider";
 import { CartContextType } from "../CartProvider";
+import { useMemo } from "react";
 const products = [
   {
     id: 1,
@@ -105,10 +106,7 @@ interface User {
 const Home: React.FC<{ user: User }> = ({ user }) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const cartContext = useContext(CartContext) as CartContextType;
-  const { cart, dispatch } = cartContext;
   console.log("The user is : ", user);
-  console.log("The cart is : ", cart);
 
   const openProductModal = (product: Product) => {
     setSelectedProduct(product);

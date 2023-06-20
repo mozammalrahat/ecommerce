@@ -10,7 +10,7 @@ interface Product {
   name: string;
   price: string;
   imageSrc: string;
-  quantity: number;
+  quantity?: number;
 }
 
 interface Action {
@@ -32,15 +32,16 @@ const initialState: Product[] = [
 const cartReducer = (state: Product[], action: Action) => {
   switch (action.type) {
     case "ADD_TO_CART":
+      console.log("Dispatched action: ", action.payload);
       const existingProductIndex = state.findIndex(
         (item) => item.id === action.payload.id
       );
       if (existingProductIndex !== -1) {
         const updatedCart = [...state];
-        updatedCart[existingProductIndex].quantity += action.payload.quantity;
+        updatedCart[existingProductIndex].quantity += 1;
         return updatedCart;
       } else {
-        return [...state, action.payload];
+        return [...state, { ...action.payload, quantity: 1 }];
       }
     case "REMOVE_FROM_CART":
       return state.filter((item) => item.id !== action.payload.id);
