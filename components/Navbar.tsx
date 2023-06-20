@@ -78,7 +78,7 @@ const Navbar: React.FC<{ user: User }> = ({ user }) => {
                 leaveTo="translate-x-full"
               >
                 <div className="relative w-screen max-w-md">
-                  <Cart onClose={() => setOpen(false)} />
+                  <Cart cart={cart} onClose={() => setOpen(false)} />
                 </div>
               </Transition.Child>
             </div>

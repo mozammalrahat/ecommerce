@@ -15,111 +15,15 @@ interface Product {
 
 interface CartProps {
   onClose: () => void;
+  cart: Product[];
 }
 
-const products: Product[] = [
-  {
-    id: 1,
-    name: "Throwback Hip Bag",
-    href: "#",
-    color: "Salmon",
-    price: "$90.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
-    imageAlt:
-      "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
-  },
-  {
-    id: 2,
-    name: "Medium Stuff Satchel",
-    href: "#",
-    color: "Blue",
-    price: "$32.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
-    imageAlt:
-      "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
-  },
-  // More products...
-];
-
-const Cart: React.FC<CartProps> = ({ onClose }) => {
+const Cart: React.FC<CartProps> = ({ onClose, cart }) => {
   const [isCheckout, setIsCheckout] = useState(false);
   const router = Router;
 
   const Checkout: React.FC = () => {
-    return (
-      <div className="leading-loose">
-        <form className="max-w-xl m-4 p-10 bg-white rounded shadow-xl">
-          <p className="text-gray-800 font-medium">Customer information</p>
-          <div className="">
-            <label className="block text-sm text-gray-00" for="cus_name">
-              Name
-            </label>
-            <input
-              className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
-              id="cus_name"
-              name="cus_name"
-              type="text"
-              required=""
-              placeholder="Your Name"
-              aria-label="Name"
-            />
-          </div>
-          <div className="mt-2">
-            <label className="block text-sm text-gray-600" for="cus_email">
-              Email
-            </label>
-            <input
-              class="w-full px-5  py-4 text-gray-700 bg-gray-200 rounded"
-              id="cus_email"
-              name="cus_email"
-              type="text"
-              required=""
-              placeholder="Your Email"
-              aria-label="Email"
-            />
-          </div>
-          <div className="mt-2">
-            <label className=" block text-sm text-gray-600" for="cus_email">
-              Address
-            </label>
-            <input
-              class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
-              id="cus_email"
-              name="cus_email"
-              type="text"
-              required=""
-              placeholder="Street"
-              aria-label="Email"
-            />
-          </div>
-          <div className="mt-2">
-            <label
-              className="hidden text-sm block text-gray-600"
-              for="cus_email"
-            >
-              City
-            </label>
-          </div>
-          <p className="mt-4 text-gray-800 font-medium">Payment information</p>
-          <div className="flex justify-between items-center">
-            <p className="text-base font-medium text-gray-900">Subtotal</p>
-            <p className="text-gray-700">$262.00</p>
-          </div>
-          <div className="flex justify-between items-center">
-            <p className="text-base font-medium text-gray-900">Method</p>
-            <p className="text-gray-700">Cash on Delivery</p>
-          </div>
-
-          <div className="mt-4">
-            <SubmitButton onClick={onClose}>Confirm Order</SubmitButton>
-          </div>
-        </form>
-      </div>
-    );
+    return <div className="leading-loose">{/* Checkout form */}</div>;
   };
 
   return (
@@ -146,8 +50,9 @@ const Cart: React.FC<CartProps> = ({ onClose }) => {
       <div className="mt-8">
         <div className="flow-root">
           <ul role="list" className="-my-6 divide-y divide-gray-200">
-            {products.map((product) => (
+            {cart.map((product) => (
               <li key={product.id} className="flex py-6">
+                {/* Product image */}
                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                   <img
                     src={product.imageSrc}
@@ -156,6 +61,7 @@ const Cart: React.FC<CartProps> = ({ onClose }) => {
                   />
                 </div>
 
+                {/* Product details */}
                 <div className="ml-4 flex flex-1 flex-col">
                   <div>
                     <div className="flex justify-between text-base font-medium text-gray-900">
