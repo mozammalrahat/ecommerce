@@ -100,6 +100,7 @@ interface Product {
 export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+
   const openProductModal = (product: Product) => {
     setSelectedProduct(product);
     setIsOpen(true);
@@ -153,6 +154,7 @@ export default function Home() {
         isOpen={isOpen}
         onClose={closeProductModal}
         product={selectedProduct}
+        buttonText="Add To Cart"
       ></PopupModal>
     </div>
   );

@@ -1,6 +1,43 @@
 import Input from "@/components/Input";
 import SubmitButton from "@/components/SubmitButton";
-export default function Example() {
+import { validateBangladeshiMobileNumber } from "@/utils/validateBangladeshiMobileNumber";
+import axios from "axios";
+import { useState } from "react";
+import cookie from "js-cookie";
+import { useRouter } from "next/router";
+export default function LogIn() {
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  const onChangeField = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === "phone") {
+      setPhone(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
+  };
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!validateBangladeshiMobileNumber(phone)) {
+      alert("Invalid Phone Number");
+      return;
+    }
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters");
+      return;
+    }
+    const { data } = await axios.post("/api/login", {
+      phone,
+      password,
+    });
+    cookie.set("token", data.token);
+    console.log(data);
+    router.push("/");
+  };
+
   return (
     <>
       {/*
@@ -19,7 +56,11 @@ export default function Example() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="\" method="POST">
+          <form
+            className="space-y-6"
+            onSubmit={(e) => onSubmit(e)}
+            method="POST"
+          >
             <div>
               <label
                 htmlFor="phone"
@@ -28,7 +69,12 @@ export default function Example() {
                 Phone Number
               </label>
             </div>
-            <Input id="phone" name="phone" type="tel" />
+            <Input
+              onChange={onChangeField}
+              id="phone"
+              name="phone"
+              type="tel"
+            />
             <div>
               <div className="flex items-center justify-between">
                 <label
@@ -39,7 +85,12 @@ export default function Example() {
                 </label>
                 <div className="text-sm"></div>
               </div>
-              <Input id="password" name="password" type="password" />
+              <Input
+                onChange={onChangeField}
+                id="password"
+                name="password"
+                type="password"
+              />
             </div>
 
             <SubmitButton>Sign In</SubmitButton>

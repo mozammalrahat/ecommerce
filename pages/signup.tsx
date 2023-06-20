@@ -1,21 +1,45 @@
 import Input from "@/components/Input";
 import SubmitButton from "@/components/SubmitButton";
-
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
+import { validateBangladeshiMobileNumber } from "@/utils/validateBangladeshiMobileNumber";
+import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 export default function Example() {
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+  const onChangeField = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === "phone") {
+      setPhone(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
+  };
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!validateBangladeshiMobileNumber(phone)) {
+      alert("Invalid Phone Number");
+      return;
+    }
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters");
+      return;
+    }
+    try {
+      const { data } = await axios.post("/api/register", {
+        phone,
+        password,
+        role: "user",
+      });
+      console.log(data);
+      router.push("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -26,7 +50,11 @@ export default function Example() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="\" method="POST">
+          <form
+            className="space-y-6"
+            onSubmit={(event) => onSubmit(event)}
+            method="POST"
+          >
             <div>
               <label
                 htmlFor="phone"
@@ -34,7 +62,12 @@ export default function Example() {
               >
                 Phone Number
               </label>
-              <Input id="phone" name="phone" type="tel" />
+              <Input
+                onChange={onChangeField}
+                id="phone"
+                name="phone"
+                type="tel"
+              />
             </div>
 
             <div>
@@ -52,7 +85,12 @@ export default function Example() {
                   ></a>
                 </div>
               </div>
-              <Input id="password" name="password" type="password" />
+              <Input
+                onChange={onChangeField}
+                id="password"
+                name="password"
+                type="password"
+              />
             </div>
 
             <SubmitButton>Sign Up</SubmitButton>
