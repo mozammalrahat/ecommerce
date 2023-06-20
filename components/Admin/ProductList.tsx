@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import SubmitButton from "../SubmitButton";
+import PopupModal from "../PopupModal";
 
 type Product = {
   id: number;
@@ -96,6 +97,18 @@ const products = [
 ];
 
 const ProductList: React.FC = () => {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openProductModal = (product: Product) => {
+    setSelectedProduct(product);
+    setIsOpen(true);
+  };
+
+  const closeProductModal = () => {
+    setSelectedProduct(null);
+    setIsOpen(false);
+  };
   return (
     <div className="bg-white rounded-lg p-4 shadow">
       <h2 className="text-xl font-bold mb-4">Product List</h2>
@@ -125,39 +138,51 @@ const ProductList: React.FC = () => {
           </thead>
           <tbody>
             {products.map((product) => (
-              <tr key={product.id}>
-                <td className="items-center py-2 px-4 border-b text-center">
-                  {product.id}
-                </td>
-                <td className="items-center py-2 px-4 border-b text-center">
-                  {product.name}
-                </td>
-                <td className="items-center py-2 px-4 border-b text-center">
-                  <img
-                    src={product.imageSrc}
-                    alt={product.imageAlt}
-                    className="h-10 w-10 object-cover rounded-full"
-                  />
-                </td>
-                <td className="items-center py-2 px-4 border-b text-center">
-                  {product.price}
-                </td>
-                <td className="items-center py-2 px-4 border-b text-center">
-                  {product.color}
-                </td>
-                <td className="items-center py-2 px-4 border-b text-center">
-                  <button
-                    type="button"
-                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
+              <React.Fragment key={product.id}>
+                <tr
+                  className="w-full cursor-pointer"
+                  onClick={() => openProductModal(product)}
+                >
+                  <td className="items-center py-2 px-4 border-b text-center">
+                    {product.id}
+                  </td>
+                  <td className="items-center py-2 px-4 border-b text-center">
+                    {product.name}
+                  </td>
+                  <td className="items-center py-2 px-4 border-b text-center">
+                    <img
+                      src={product.imageSrc}
+                      alt={product.imageAlt}
+                      className="h-10 w-10 object-cover rounded-full"
+                    />
+                  </td>
+                  <td className="items-center py-2 px-4 border-b text-center">
+                    {product.price}
+                  </td>
+                  <td className="items-center py-2 px-4 border-b text-center">
+                    {product.color}
+                  </td>
+                  <td className="items-center py-2 px-4 border-b text-center">
+                    <button
+                      onClick={(e) => e.stopPropagation()}
+                      type="button"
+                      className="focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </React.Fragment>
             ))}
           </tbody>
         </table>
       </div>
+      <PopupModal
+        isOpen={isOpen}
+        onClose={closeProductModal}
+        product={selectedProduct}
+        buttonText="Delete"
+      ></PopupModal>
 
       <div className="mt-4">
         <h3 className="text-lg font-bold mb-2">Add Product</h3>

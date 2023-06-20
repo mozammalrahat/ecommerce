@@ -4,6 +4,7 @@ interface PopupModalProps {
   isOpen: boolean;
   onClose: () => void;
   product?: Product | null;
+  buttonText: string;
 }
 interface Product {
   id: number;
@@ -19,6 +20,7 @@ const PopupModal: React.FC<PopupModalProps> = ({
   isOpen,
   onClose,
   product,
+  buttonText,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -84,12 +86,14 @@ const PopupModal: React.FC<PopupModalProps> = ({
           </div>
         </div>
         <button
-          onClick={() => {
-            console.log("Added To Cart");
-          }}
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          onClick={() => {}}
+          className={`mt-4 px-4 py-2 rounded-md  ${
+            buttonText === "Delete"
+              ? "bg-red-500 hover:bg-red-600"
+              : "bg-blue-500 hover:bg-blue-600"
+          } text-white`}
         >
-          Add to Cart
+          {buttonText}
         </button>
       </div>
     </div>

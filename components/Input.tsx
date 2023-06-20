@@ -4,10 +4,12 @@ interface InputProps {
   id: string;
   name: string;
   type: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 const Input: React.FC<InputProps> = (props) => (
   <div className="mt-2">
     <input
+      onChange={props.onChange}
       id={props.id}
       name={props.name}
       type={props.type}

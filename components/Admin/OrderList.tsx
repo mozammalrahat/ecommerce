@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import SubmitButton from "../SubmitButton";
+import OrderPopupModal from "./OrderPopupModal";
 
 type Product = {
   id: number;
@@ -91,6 +92,18 @@ const Orders: Order[] = [
 ];
 
 const OrderList: React.FC = () => {
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const openOrderModal = (order: Order) => {
+    setSelectedOrder(order);
+    setIsOpen(true);
+  };
+
+  const closeOrderModal = () => {
+    setSelectedOrder(null);
+    setIsOpen(false);
+  };
+
   return (
     <div className="bg-white rounded-lg p-4 shadow">
       <h2 className="text-xl font-bold mb-4">Order List</h2>
@@ -117,7 +130,7 @@ const OrderList: React.FC = () => {
           </thead>
           <tbody>
             {Orders.map((order) => (
-              <tr key={order.id}>
+              <tr key={order.id} onClick={() => openOrderModal(order)}>
                 <td className="items-center py-2 px-4 border-b text-center">
                   {order.id}
                 </td>
@@ -132,8 +145,11 @@ const OrderList: React.FC = () => {
                 </td>
                 <td className="items-center py-2 px-4 border-b text-center">
                   <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
                     type="button"
-                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700"
                   >
                     Delete
                   </button>
@@ -143,6 +159,13 @@ const OrderList: React.FC = () => {
           </tbody>
         </table>
       </div>
+
+      <OrderPopupModal
+        isOpen={isOpen}
+        onClose={closeOrderModal}
+        order={selectedOrder} // Pass the order object here
+        buttonText={"Delete"}
+      />
     </div>
   );
 };

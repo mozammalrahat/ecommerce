@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="flex items-center justify-between bg-gray-200 p-4">
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between bg-gray-200 p-4">
         <Link legacyBehavior href="/">
           <a className="flex items-center font-semibold text-gray-800">
             <span>Ecommerce</span>
@@ -32,6 +32,8 @@ const Navbar = () => {
           </li>
         </ul>
       </nav>
+
+      <div className="pt-14"></div>
 
       <Transition.Root show={open} as={React.Fragment}>
         <Dialog
