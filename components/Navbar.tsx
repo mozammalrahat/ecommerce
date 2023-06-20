@@ -5,8 +5,11 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { CartIcon } from "./cartIcon";
 import Cart from "./Cart";
 import { CartContext } from "../CartProvider";
-
-const Navbar = () => {
+interface User {
+  phone: string;
+  role?: string;
+}
+const Navbar: React.FC<{ user: User }> = ({ user }) => {
   const [open, setOpen] = useState(false);
   const cartContext = useContext(CartContext);
   const { cart } = cartContext;
@@ -24,14 +27,16 @@ const Navbar = () => {
           </a>
         </Link>
         <ul className="flex space-x-4">
-          <li>
-            <div className="flex items-center justify-between">
-              <button onClick={() => setOpen(true)} className="text-gray-800">
-                Cart {getTotalCartItems() && `(${getTotalCartItems()})`}
-              </button>
-              <CartIcon />
-            </div>
-          </li>
+          {user.role === "user" && (
+            <li>
+              <div className="flex items-center justify-between">
+                <button onClick={() => setOpen(true)} className="text-gray-800">
+                  Cart {getTotalCartItems() && `(${getTotalCartItems()})`}
+                </button>
+                <CartIcon />
+              </div>
+            </li>
+          )}
           <li>
             <Link legacyBehavior href="/login">
               <a className="text-gray-800">Log Out</a>
