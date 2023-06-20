@@ -5,6 +5,12 @@ import Navbar from "@/components/Navbar";
 import { destroyCookie, parseCookies } from "nookies";
 import { redirectUser } from "../utils/authUser";
 import axios from "axios";
+import CartProvider from "@/CartProvider";
+
+interface User {
+  phone: string;
+  role?: string;
+}
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }: AppContext) {
@@ -22,8 +28,8 @@ class MyApp extends App {
         const res = await axios.get(`http://localhost:3000/api/auth`, {
           headers: { Authorization: token },
         });
-        const userId = res.data.userId;
-        pageProps = { ...pageProps, userId };
+        const user: User = res.data.user;
+        pageProps = { ...pageProps, user };
       } catch (err) {
         destroyCookie(ctx, "token");
         redirectUser(ctx, "/login");
@@ -38,8 +44,10 @@ class MyApp extends App {
     if (protectedRoutes) {
       return (
         <>
-          <Navbar />
-          <Component {...pageProps} />
+          <CartProvider>
+            <Navbar />
+            <Component {...pageProps} />
+          </CartProvider>
         </>
       );
     } else {

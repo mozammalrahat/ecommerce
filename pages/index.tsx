@@ -2,7 +2,9 @@ import dynamic from "next/dynamic";
 const PopupModal = dynamic(() => import("@/components/PopupModal"), {
   ssr: false,
 });
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { CartContext } from "../CartProvider";
+import { CartContextType } from "../CartProvider";
 const products = [
   {
     id: 1,
@@ -96,10 +98,17 @@ interface Product {
   price: string;
   color: string;
 }
-
-export default function Home() {
+interface User {
+  phone: string;
+  role?: string;
+}
+const Home: React.FC<{ user: User }> = ({ user }) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const cartContext = useContext(CartContext) as CartContextType;
+  const { cart, dispatch } = cartContext;
+  console.log("The user is : ", user);
+  console.log("The cart is : ", cart);
 
   const openProductModal = (product: Product) => {
     setSelectedProduct(product);
@@ -158,4 +167,5 @@ export default function Home() {
       ></PopupModal>
     </div>
   );
-}
+};
+export default Home;
