@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SubmitButton from "./SubmitButton";
 import { Router } from "next/router";
 import { CartContext, CartContextType } from "@/CartProvider";
@@ -13,25 +13,47 @@ interface Product {
   imageSrc: string;
   imageAlt: string;
 }
-
+interface User {
+  phone: string;
+  role?: string;
+}
 interface CartProps {
   onClose: () => void;
-  cart: Product[];
+  user: User;
 }
 
-const Cart: React.FC<CartProps> = ({ onClose, cart }) => {
+const Cart: React.FC<CartProps> = ({ onClose, user }) => {
   const [isCheckout, setIsCheckout] = useState(false);
-  const router = Router;
+  const [address, setAddress] = useState("");
+  const [name, setname] = useState("");
   const cartContext = useContext(CartContext) as CartContextType;
-  const { dispatch } = cartContext;
-  const removeProduct = (productId: number) => {
-    dispatch({ type: "REMOVE_FROM_CART", payload: { id: productId } });
-    console.log("Removing product with id: ", productId);
+  const { cart, dispatch } = cartContext;
+
+  const onChangehandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "name") {
+      setname(e.target.value);
+    } else if (e.target.name === "address") {
+      setAddress(e.target.value);
+    }
+  };
+  const handleOrder = (e) => {
+    e.preventDefault();
+    console.log("user is :", user);
+    const order = {
+      ...user,
+      name,
+      address,
+      cart,
+    };
+    console.log("order", order);
   };
 
-  const calculateSubtotal = (): number => {
-    let subtotal = 0;
+  const removeProduct = (productId: number) => {
+    dispatch({ type: "REMOVE_FROM_CART", payload: { id: productId } });
+  };
 
+  let subtotal = 0;
+  const calculateSubtotal = (): number => {
     cart.forEach((product) => {
       const price = Number(product.price.replace("$", ""));
       subtotal += price * product.quantity;
@@ -40,7 +62,64 @@ const Cart: React.FC<CartProps> = ({ onClose, cart }) => {
   };
 
   const Checkout: React.FC = () => {
-    return <div className="leading-loose">{/* Checkout form */}</div>;
+    return (
+      <div className="leading-loose">
+        <form className="max-w-xl m-4 p-10 bg-white rounded shadow-xl">
+          <p className="text-gray-800 font-medium">Customer information</p>
+          <div className="">
+            <label className="block text-sm text-gray-00" for="cus_name">
+              Name
+            </label>
+            <input
+              className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
+              id="name"
+              name="name"
+              type="text"
+              required=""
+              placeholder="Your Name"
+              aria-label="Name"
+            />
+          </div>
+          <div className="mt-2">
+            <label className=" block text-sm text-gray-600" for="cus_email">
+              Address
+            </label>
+            <input
+              class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+              id="address"
+              name="address"
+              type="text"
+              required=""
+              placeholder="Street"
+              aria-label="Email"
+            />
+          </div>
+          <div className="mt-2">
+            <label
+              className="hidden text-sm block text-gray-600"
+              for="cus_email"
+            >
+              City
+            </label>
+          </div>
+          <p className="mt-4 text-gray-800 font-medium">Payment information</p>
+          <div className="flex justify-between items-center">
+            <p className="text-base font-medium text-gray-900">Subtotal</p>
+            <p className="text-gray-700">{calculateSubtotal()}</p>
+          </div>
+          <div className="flex justify-between items-center">
+            <p className="text-base font-medium text-gray-900">Method</p>
+            <p className="text-gray-700">Cash on Delivery</p>
+          </div>
+
+          <div className="mt-4">
+            <SubmitButton onClick={(e) => handleOrder(e)}>
+              Confirm Order
+            </SubmitButton>
+          </div>
+        </form>
+      </div>
+    );
   };
 
   return (
@@ -109,18 +188,16 @@ const Cart: React.FC<CartProps> = ({ onClose, cart }) => {
           </ul>
         </div>
       </div>
-      {!isCheckout && (
+      {cart.length > 0 && !isCheckout && (
         <div className="p-4 border-t border-gray-200">
           <div className="flex justify-between items-center">
             <p className="text-base font-medium text-gray-900">Subtotal</p>
             <p className="text-gray-700">${calculateSubtotal().toFixed(2)}</p>
           </div>
 
-          {cart.length > 0 && (
-            <SubmitButton onClick={() => setIsCheckout(true)}>
-              Checkout
-            </SubmitButton>
-          )}
+          <SubmitButton onClick={() => setIsCheckout(true)}>
+            Checkout
+          </SubmitButton>
 
           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
             <p>
