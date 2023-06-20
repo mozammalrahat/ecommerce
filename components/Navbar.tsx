@@ -13,11 +13,12 @@ const Navbar: React.FC<{ user: User }> = ({ user }) => {
   const [open, setOpen] = useState(false);
   const cartContext = useContext(CartContext);
   const { cart } = cartContext;
+  console.log("The cart is : ", cart);
   const getTotalCartItems = () => {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     return totalItems > 0 ? totalItems : null;
   };
-
+  console.log("The user is : ", user);
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between bg-gray-200 p-4">

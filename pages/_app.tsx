@@ -45,7 +45,7 @@ class MyApp extends App {
       return (
         <>
           <CartProvider>
-            <Navbar />
+            <Navbar user={pageProps.user} />
             <Component {...pageProps} />
           </CartProvider>
         </>
