@@ -1,1 +1,157 @@
-[{"phone":"+8801821919474","role":"user","name":"John Doe","address":"123 Main St, City, State","cart":[{"id":1,"name":"Product 1","price":"$35","imageSrc":"https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg","quantity":1},{"id":2,"name":"Product 2","price":"$50","imageSrc":"https://tailwindui.com/img/ecommerce-images/product-page-02-detail-product-02.jpg","quantity":3},{"id":3,"name":"Product 3","price":"$20","imageSrc":"https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg","quantity":2},{"id":4,"name":"Product 4","price":"$15","imageSrc":"https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-01.jpg","quantity":1},{"id":5,"name":"Product 5","price":"$40","imageSrc":"https://tailwindui.com/img/ecommerce-images/product-page-05-related-product-05.jpg","quantity":2}]},{"phone":"+8801821919474","role":"user","name":"Mozammal","address":"Akhalia","cart":[{"id":1,"name":"Product 1","price":"$35","imageSrc":"https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg","color":"Black","quantity":6}]},{"phone":"+8801821919474","role":"user","name":"Mozammal","address":"Akhalia","cart":[{"id":7,"name":"Product 7","price":"$3465645","imageSrc":"https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg","color":"Black","quantity":1},{"id":1,"name":"Product 1","price":"$35","imageSrc":"https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg","color":"Black","quantity":1},{"id":8,"name":"Product 8","price":"$999","imageSrc":"https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg","color":"Black","quantity":2}]},{"phone":"+8801821919474","role":"user","name":"Mozammal","address":"sgspkg'spg[psdkg","cart":[{"id":8,"name":"Product 8","price":"$999","imageSrc":"https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg","color":"Black","quantity":1},{"id":1,"name":"Product 1","price":"$35","imageSrc":"https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg","color":"Black","quantity":1}]},{"phone":"+8801821919474","role":"user","name":"A","address":"Akhalia","cart":[{"id":2,"name":"Product 2","price":"$350","imageSrc":"https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg","color":"Black","quantity":1},{"id":1,"name":"Product 1","price":"$35","imageSrc":"https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg","color":"Black","quantity":1}]},{"phone":"+8801821919474","role":"user","name":"","address":"","cart":[{"id":1,"name":"Product 1","price":"$35","imageSrc":"https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg","color":"Black","quantity":2}]}]
+[
+  {
+    "phone": "+8801821919474",
+    "role": "user",
+    "name": "John Doe",
+    "address": "123 Main St, City, State",
+    "cart": [
+      {
+        "id": 1,
+        "name": "Product 1",
+        "price": "$35",
+        "imageSrc": "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+        "quantity": 1
+      },
+      {
+        "id": 2,
+        "name": "Product 2",
+        "price": "$50",
+        "imageSrc": "https://tailwindui.com/img/ecommerce-images/product-page-02-detail-product-02.jpg",
+        "quantity": 3
+      },
+      {
+        "id": 3,
+        "name": "Product 3",
+        "price": "$20",
+        "imageSrc": "https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg",
+        "quantity": 2
+      },
+      {
+        "id": 4,
+        "name": "Product 4",
+        "price": "$15",
+        "imageSrc": "https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-01.jpg",
+        "quantity": 1
+      },
+      {
+        "id": 5,
+        "name": "Product 5",
+        "price": "$40",
+        "imageSrc": "https://tailwindui.com/img/ecommerce-images/product-page-05-related-product-05.jpg",
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "phone": "+8801821919474",
+    "role": "user",
+    "name": "Mozammal",
+    "address": "Akhalia",
+    "cart": [
+      {
+        "id": 1,
+        "name": "Product 1",
+        "price": "$35",
+        "imageSrc": "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+        "color": "Black",
+        "quantity": 6
+      }
+    ]
+  },
+  {
+    "phone": "+8801821919474",
+    "role": "user",
+    "name": "Mozammal",
+    "address": "Akhalia",
+    "cart": [
+      {
+        "id": 7,
+        "name": "Product 7",
+        "price": "$3465645",
+        "imageSrc": "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+        "color": "Black",
+        "quantity": 1
+      },
+      {
+        "id": 1,
+        "name": "Product 1",
+        "price": "$35",
+        "imageSrc": "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+        "color": "Black",
+        "quantity": 1
+      },
+      {
+        "id": 8,
+        "name": "Product 8",
+        "price": "$999",
+        "imageSrc": "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+        "color": "Black",
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "phone": "+8801821919474",
+    "role": "user",
+    "name": "Mozammal",
+    "address": "sgspkg'spg[psdkg",
+    "cart": [
+      {
+        "id": 8,
+        "name": "Product 8",
+        "price": "$999",
+        "imageSrc": "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+        "color": "Black",
+        "quantity": 1
+      },
+      {
+        "id": 1,
+        "name": "Product 1",
+        "price": "$35",
+        "imageSrc": "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+        "color": "Black",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "phone": "+8801821919474",
+    "role": "user",
+    "name": "A",
+    "address": "Akhalia",
+    "cart": [
+      {
+        "id": 2,
+        "name": "Product 2",
+        "price": "$350",
+        "imageSrc": "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+        "color": "Black",
+        "quantity": 1
+      },
+      {
+        "id": 1,
+        "name": "Product 1",
+        "price": "$35",
+        "imageSrc": "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+        "color": "Black",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "phone": "+8801821919474",
+    "role": "user",
+    "name": "",
+    "address": "",
+    "cart": [
+      {
+        "id": 1,
+        "name": "Product 1",
+        "price": "$35",
+        "imageSrc": "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+        "color": "Black",
+        "quantity": 2
+      }
+    ]
+  }
+]

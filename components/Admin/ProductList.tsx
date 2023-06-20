@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SubmitButton from "../SubmitButton";
 import PopupModal from "../PopupModal";
+import axios from "axios";
 
 type Product = {
   id: number;
@@ -12,93 +13,22 @@ type Product = {
   color: string;
 };
 
-const products = [
-  {
-    id: 1,
-    name: "Product 1",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 2,
-    name: "Product 2",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$350",
-    color: "Black",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$445",
-    color: "Black",
-  },
-  {
-    id: 4,
-    name: "Product 4",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$3555",
-    color: "Black",
-  },
-  {
-    id: 5,
-    name: "Product 5",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$45435",
-    color: "Black",
-  },
-  {
-    id: 6,
-    name: "Product 6",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$364645",
-    color: "Black",
-  },
-  {
-    id: 7,
-    name: "Product 7",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$3465645",
-    color: "Black",
-  },
-  {
-    id: 8,
-    name: "Product 8",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$999",
-    color: "Black",
-  },
-  // Add more products with different names as needed
-];
-
 const ProductList: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+  const fetchProducts = async () => {
+    try {
+      const { data } = await axios.get("/api/products");
+      setProducts(data.products);
+    } catch (error) {
+      console.log("Error fetching products:", error);
+    }
+  };
 
   const openProductModal = (product: Product) => {
     setSelectedProduct(product);
