@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import SubmitButton from "./SubmitButton";
 import { Router } from "next/router";
+import { CartContext, CartContextType } from "@/CartProvider";
 
 interface Product {
   id: number;
@@ -21,6 +22,22 @@ interface CartProps {
 const Cart: React.FC<CartProps> = ({ onClose, cart }) => {
   const [isCheckout, setIsCheckout] = useState(false);
   const router = Router;
+  const cartContext = useContext(CartContext) as CartContextType;
+  const { dispatch } = cartContext;
+  const removeProduct = (productId: number) => {
+    dispatch({ type: "REMOVE_FROM_CART", payload: { id: productId } });
+    console.log("Removing product with id: ", productId);
+  };
+
+  const calculateSubtotal = (): number => {
+    let subtotal = 0;
+
+    cart.forEach((product) => {
+      const price = Number(product.price.replace("$", ""));
+      subtotal += price * product.quantity;
+    });
+    return subtotal;
+  };
 
   const Checkout: React.FC = () => {
     return <div className="leading-loose">{/* Checkout form */}</div>;
@@ -52,7 +69,6 @@ const Cart: React.FC<CartProps> = ({ onClose, cart }) => {
           <ul role="list" className="-my-6 divide-y divide-gray-200">
             {cart.map((product) => (
               <li key={product.id} className="flex py-6">
-                {/* Product image */}
                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                   <img
                     src={product.imageSrc}
@@ -61,7 +77,6 @@ const Cart: React.FC<CartProps> = ({ onClose, cart }) => {
                   />
                 </div>
 
-                {/* Product details */}
                 <div className="ml-4 flex flex-1 flex-col">
                   <div>
                     <div className="flex justify-between text-base font-medium text-gray-900">
@@ -75,12 +90,14 @@ const Cart: React.FC<CartProps> = ({ onClose, cart }) => {
                     </p>
                   </div>
                   <div className="flex flex-1 items-end justify-between text-sm">
-                    <p className="text-gray-500">Qty {product.quantity}</p>
-
+                    <p className="text-gray-500">
+                      Quantity : {product.quantity}
+                    </p>
                     <div className="flex">
                       <button
                         type="button"
                         className="font-medium text-indigo-600 hover:text-indigo-500"
+                        onClick={() => removeProduct(product.id)}
                       >
                         Remove
                       </button>
@@ -96,15 +113,14 @@ const Cart: React.FC<CartProps> = ({ onClose, cart }) => {
         <div className="p-4 border-t border-gray-200">
           <div className="flex justify-between items-center">
             <p className="text-base font-medium text-gray-900">Subtotal</p>
-            <p className="text-gray-700">$262.00</p>
+            <p className="text-gray-700">${calculateSubtotal().toFixed(2)}</p>
           </div>
-          <p className="mt-0.5 text-sm text-gray-500">
-            Shipping and taxes calculated at checkout.
-          </p>
 
-          <SubmitButton onClick={() => setIsCheckout(true)}>
-            Checkout
-          </SubmitButton>
+          {cart.length > 0 && (
+            <SubmitButton onClick={() => setIsCheckout(true)}>
+              Checkout
+            </SubmitButton>
+          )}
 
           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
             <p>
@@ -121,7 +137,7 @@ const Cart: React.FC<CartProps> = ({ onClose, cart }) => {
         </div>
       )}
 
-      {isCheckout && <Checkout />}
+      {cart.length > 0 && isCheckout && <Checkout />}
     </div>
   );
 };
