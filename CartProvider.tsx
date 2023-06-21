@@ -5,19 +5,33 @@ export interface CartContextType {
   dispatch: React.Dispatch<Action>;
 }
 
-interface Action {
-  type: string;
-  payload?: CartProduct;
-}
+type Action =
+  | {
+      type: string;
+      payload?: {
+        id: number;
+        name: string;
+        price: string;
+        imageSrc: string;
+        quantity: number;
+      };
+    }
+  | {
+      type: string;
+      payload?: { id: number };
+    };
 
 const initialState: CartProduct[] = [];
 
-const cartReducer = (state: CartProduct[], action: Action) => {
+const cartReducer = (
+  state: CartProduct[] | any = initialState,
+  action: Action
+): CartProduct[] => {
   switch (action.type) {
     case "ADD_TO_CART":
       console.log("Dispatched action: ", action.payload);
       const existingProductIndex = state.findIndex(
-        (item) => item.id === action.payload?.id
+        (item: CartProduct) => item.id === action.payload?.id
       );
       if (existingProductIndex !== -1) {
         const updatedCart = [...state];
@@ -27,7 +41,9 @@ const cartReducer = (state: CartProduct[], action: Action) => {
         return [...state, { ...action.payload, quantity: 1 }];
       }
     case "REMOVE_FROM_CART":
-      return state.filter((item) => item.id !== action.payload?.id);
+      return state.filter(
+        (item: CartProduct) => item.id !== action.payload?.id
+      );
     case "CLEAR_CART":
       return [];
     default:
