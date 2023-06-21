@@ -40,7 +40,6 @@ export default async function handler(
         const fileData = fs.readFileSync(filePath, "utf-8");
         orders = fileData ? JSON.parse(fileData) : [];
       }
-      console.log("order", orders);
 
       orders.forEach((order) => {
         order.totalPrice = calculateTotalPrice(order.cart);
@@ -49,7 +48,6 @@ export default async function handler(
 
       res.status(200).json({ orders });
     } catch (err) {
-      console.log(err);
       res.status(500).json({ message: "Internal server error" });
     }
   }

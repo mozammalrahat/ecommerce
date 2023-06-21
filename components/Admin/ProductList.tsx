@@ -49,7 +49,7 @@ const ProductList: React.FC = () => {
       price: productPrice,
       color: productColor,
     };
-    console.log("The product is : ", product);
+
     try {
       axios
         .post("/api/products/product", product, {

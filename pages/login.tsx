@@ -34,7 +34,6 @@ export default function LogIn() {
       password,
     });
     cookie.set("token", data.token);
-    console.log(data);
     router.push("/");
   };
 

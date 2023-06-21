@@ -4,6 +4,7 @@ import { validateBangladeshiMobileNumber } from "@/utils/validateBangladeshiMobi
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+
 export default function Example() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");

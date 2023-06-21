@@ -42,7 +42,6 @@ export default async function handler(
         const fileData = fs.readFileSync(filePath, "utf-8");
         orders = fileData ? JSON.parse(fileData) : [];
       }
-      console.log("order", order);
       order.id = Date.now();
       orders.push(order);
 

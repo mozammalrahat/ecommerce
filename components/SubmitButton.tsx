@@ -2,7 +2,7 @@ import React from "react";
 
 interface SubmitButtonProps {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const SubmitButton: React.FC<SubmitButtonProps> = ({ children, onClick }) => (

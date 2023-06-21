@@ -32,7 +32,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(404).json({ message: "User not found" });
     }
     const user = { phone, role: existingUser.role };
-    console.log("user is :", user);
     return res.status(200).json({ user });
   } catch (error) {
     console.error(error);
