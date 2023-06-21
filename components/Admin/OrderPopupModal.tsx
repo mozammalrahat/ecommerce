@@ -79,7 +79,6 @@ const OrderPopupModal: React.FC<PopupModalProps> = ({
                   <div key={item.id} className="flex items-center mb-4">
                     <img
                       src={item.imageSrc}
-                      // alt={item.imageAlt}
                       className="h-10 w-10 object-cover rounded-full"
                     />
                     <div className="ml-4">

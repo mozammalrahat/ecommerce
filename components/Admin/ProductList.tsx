@@ -116,7 +116,6 @@ const ProductList: React.FC = () => {
                   <td className="items-center py-2 px-4 border-b text-center">
                     <img
                       src={product.imageSrc}
-                      alt={product.imageAlt}
                       className="h-10 w-10 object-cover rounded-full"
                     />
                   </td>

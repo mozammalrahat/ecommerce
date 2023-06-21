@@ -14,7 +14,7 @@ interface Product {
   name: string;
   href: string;
   imageSrc: string;
-  imageAlt: string;
+  imageAlt?: string;
   price: string;
   color: string;
 }
