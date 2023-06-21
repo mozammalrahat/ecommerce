@@ -18,5 +18,5 @@ const setToken = (token: string) => {
 
 export const logoutUser = () => {
   cookie.remove("token");
-  Router.push("/");
+  Router.push("/login");
 };

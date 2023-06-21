@@ -29,6 +29,9 @@ class MyApp extends App {
           headers: { Authorization: token },
         });
         const user: User = res.data.user;
+        if (user.role !== "admin" && ctx.pathname === "/admin") {
+          redirectUser(ctx, "/");
+        }
         pageProps = { ...pageProps, user };
       } catch (err) {
         destroyCookie(ctx, "token");

@@ -4,7 +4,10 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { CartIcon } from "./cartIcon";
 import Cart from "./Cart";
+import { useRouter } from "next/router";
 import { CartContext } from "../CartProvider";
+import { logoutUser } from "@/utils/authUser";
+import SubmitButton from "./SubmitButton";
 interface User {
   phone: string;
   role?: string;
@@ -13,7 +16,7 @@ const Navbar: React.FC<{ user: User }> = ({ user }) => {
   const [open, setOpen] = useState(false);
   const cartContext = useContext(CartContext);
   const { cart } = cartContext;
-  console.log("The cart is : ", cart);
+  const router = useRouter();
   const getTotalCartItems = () => {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     return totalItems > 0 ? totalItems : null;
@@ -22,11 +25,27 @@ const Navbar: React.FC<{ user: User }> = ({ user }) => {
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between bg-gray-200 p-4">
-        <Link legacyBehavior href="/">
-          <a className="flex items-center font-semibold text-gray-800">
-            <span>Ecommerce</span>
-          </a>
-        </Link>
+        {router.asPath === "/" ? (
+          user.role === "user" ? (
+            <Link legacyBehavior href="/">
+              <a className="flex items-center font-semibold text-gray-800">
+                <span>Ecommerce</span>
+              </a>
+            </Link>
+          ) : (
+            <Link legacyBehavior href="/admin">
+              <a className="flex items-center font-semibold text-gray-800">
+                <span>Admin</span>
+              </a>
+            </Link>
+          )
+        ) : (
+          <Link legacyBehavior href="/">
+            <a className="flex items-center font-semibold text-gray-800">
+              <span>Ecommerce</span>
+            </a>
+          </Link>
+        )}
         <ul className="flex space-x-4">
           {user.role === "user" && (
             <li>
@@ -39,9 +58,7 @@ const Navbar: React.FC<{ user: User }> = ({ user }) => {
             </li>
           )}
           <li>
-            <Link legacyBehavior href="/login">
-              <a className="text-gray-800">Log Out</a>
-            </Link>
+            <SubmitButton onClick={() => logoutUser()}>Logout</SubmitButton>
           </li>
         </ul>
       </nav>
