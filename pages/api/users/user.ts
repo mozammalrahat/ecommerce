@@ -33,7 +33,7 @@ export default async function handler(
 
       const { phone, password, role } = user;
 
-      // Check if the user already exists
+    
       const existingUser = users.find((u) => u.phone === phone);
       if (existingUser) {
         return res.status(409).json({ message: "User already exists" });

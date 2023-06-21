@@ -24,14 +24,14 @@ export default async function handler(
     try {
       const { phone, password, role } = req.body;
 
-      // Read the existing users data from the JSON file
+      
       let users: User[] = [];
       if (fs.existsSync(filePath)) {
         const fileData = fs.readFileSync(filePath, "utf-8");
         users = fileData ? JSON.parse(fileData) : [];
       }
       console.log("Users: ", users);
-      // Check if the user already exists
+   
       const existingUser = users.find((user: User) => user.phone === phone);
       if (existingUser) {
         return res.status(400).json({ message: "User already exists" });

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import jwt, { Secret } from "jsonwebtoken";
 import path from "path";
 import fs from "fs";
 
@@ -24,20 +24,17 @@ export default async function handler(
     try {
       const { phone, password } = req.body;
 
-      // Read the existing users data from the JSON file
       let users: User[] = [];
       if (fs.existsSync(filePath)) {
         const fileData = fs.readFileSync(filePath, "utf-8");
         users = fileData ? JSON.parse(fileData) : [];
       }
 
-      // Check if the user exists
       const existingUser = users.find((user: User) => user.phone === phone);
       if (!existingUser) {
         return res.status(404).json({ message: "User not found" });
       }
 
-      // Verify the password
       const passwordMatch = await bcrypt.compare(
         password,
         existingUser.password
@@ -48,7 +45,7 @@ export default async function handler(
 
       const token = jwt.sign(
         { phone, password: existingUser.password },
-        process.env.JWT_SECRET,
+        process.env.JWT_SECRET || "REPLIQ",
         { expiresIn: "1d" }
       );
 
