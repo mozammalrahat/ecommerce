@@ -10,7 +10,7 @@ const Admin: React.FC = () => {
   const [summary, setSummary] = React.useState<summaryDetails | null>(null);
   useEffect(() => {
     const getSummary = async () => {
-      const { data } = await axios.get("http://localhost:3000/api/summary");
+      const { data } = await axios.get("/api/summary");
       setSummary(data);
     };
     getSummary();

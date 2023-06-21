@@ -41,7 +41,7 @@ const Cart: React.FC<CartProps> = ({ onClose, user }) => {
     };
     console.log("order", order);
     await axios
-      .post("http://localhost:3000/api/orders/order", order, {
+      .post("/api/orders/order", order, {
         headers: {
           Authorization: Cookies.get("token"),
         },
