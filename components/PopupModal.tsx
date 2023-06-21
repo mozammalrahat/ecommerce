@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { CartContext, CartContextType } from "../CartProvider";
+import { CartProduct } from "@/types";
 interface PopupModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -14,6 +15,7 @@ interface Product {
   imageAlt?: string;
   price: string;
   color: string;
+  quantity?: number;
 }
 
 const PopupModal: React.FC<PopupModalProps> = ({
@@ -45,14 +47,13 @@ const PopupModal: React.FC<PopupModalProps> = ({
   const handleAddToCart = () => {
     if (product) {
       const { id, name, price, imageSrc, color } = product;
-      const newProduct: Product = {
+      const newProduct: CartProduct = {
         id,
         name,
         price,
         imageSrc,
-        color,
+        quantity: 1,
       };
-      console.log("The new product is : ", newProduct);
 
       dispatch({ type: "ADD_TO_CART", payload: newProduct });
       // setAddedToCart(true);

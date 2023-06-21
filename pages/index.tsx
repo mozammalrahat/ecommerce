@@ -7,7 +7,7 @@ import { CartContext } from "../CartProvider";
 import { CartContextType } from "../CartProvider";
 import { useMemo } from "react";
 import axios from "axios";
-import Product from "@/components/Product";
+import ProductComponent from "@/components/Product";
 
 interface Product {
   id: number;
@@ -58,7 +58,7 @@ const Home: React.FC<{ user: User }> = ({ user }) => {
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {error && <p className="text-red-500">{error}</p>}
             {products.map((product) => (
-              <Product
+              <ProductComponent
                 key={product.id}
                 product={product}
                 openProductModal={openProductModal}

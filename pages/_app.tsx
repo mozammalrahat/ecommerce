@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import App from "next/app";
-import type { AppProps } from "next/app";
+import type { AppProps, AppContext } from "next/app";
 import Navbar from "@/components/Navbar";
 import { destroyCookie, parseCookies } from "nookies";
 import { redirectUser } from "../utils/authUser";

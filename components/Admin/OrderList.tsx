@@ -2,31 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SubmitButton from "../SubmitButton";
 import OrderPopupModal from "./OrderPopupModal";
-
-type Product = {
-  id: number;
-  name: string;
-  href: string;
-  imageSrc: string;
-  imageAlt: string;
-  price: string;
-  color: string;
-};
-
-type Item = {
-  product: Product;
-  quantity: number;
-};
-
-type Order = {
-  id: string;
-  customerId: string;
-  phone: string;
-  items: Item[];
-  totalPrice: string;
-  totalQuantity: number;
-  name: string;
-};
+import { Product, Item, Order } from "../../types";
 
 const OrderList: React.FC = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);

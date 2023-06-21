@@ -4,18 +4,10 @@ import CustomerList from "../components/Admin/CustomerList";
 import OrderList from "../components/Admin/OrderList";
 import ProductList from "../components/Admin/ProductList";
 import axios from "axios";
-
-interface summaryDetails {
-  totalCustomers: number;
-  totalOrders: number;
-  totalProducts: number;
-}
-interface summaryProps {
-  summary: summaryDetails;
-}
+import { summaryDetails } from "../types";
 
 const Admin: React.FC = () => {
-  const [summary, setSummary] = React.useState<summaryProps | {}>({});
+  const [summary, setSummary] = React.useState<summaryDetails | null>(null);
   useEffect(() => {
     const getSummary = async () => {
       const { data } = await axios.get("http://localhost:3000/api/summary");

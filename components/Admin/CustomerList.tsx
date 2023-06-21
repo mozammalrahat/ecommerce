@@ -29,7 +29,11 @@ const CustomersList: React.FC = () => {
     }
   };
 
-  const onFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onFieldChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     if (e.target.name === "phone") {
       setPhone(e.target.value);
     } else if (e.target.name === "password") {

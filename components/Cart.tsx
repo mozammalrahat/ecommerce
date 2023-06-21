@@ -5,14 +5,8 @@ import Cookies from "js-cookie";
 import { CartContext, CartContextType } from "../CartProvider";
 import CartProductList from "./CartProductList";
 import Checkout from "./Checkout";
+import { CartProduct } from "@/types";
 
-interface Product {
-  id: number;
-  name: string;
-  color: string;
-  price: string;
-  imageSrc: string;
-}
 interface User {
   phone: string;
   role?: string;

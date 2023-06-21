@@ -19,9 +19,7 @@ const Checkout: React.FC<CheckoutProps> = ({
       <form className="max-w-xl m-4 p-10 bg-white rounded shadow-xl">
         <p className="text-gray-800 font-medium">Customer information</p>
         <div className="">
-          <label className="block text-sm text-gray-00" for="cus_name">
-            Name
-          </label>
+          <label className="block text-sm text-gray-00">Name</label>
           <input
             onChange={onChangehandler}
             className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
@@ -34,9 +32,7 @@ const Checkout: React.FC<CheckoutProps> = ({
           />
         </div>
         <div className="mt-2">
-          <label className=" block text-sm text-gray-600" for="cus_email">
-            Address
-          </label>
+          <label className=" block text-sm text-gray-600">Address</label>
           <input
             onChange={onChangehandler}
             value={address}

@@ -5,7 +5,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { CartIcon } from "./cartIcon";
 import Cart from "./Cart";
 import { useRouter } from "next/router";
-import { CartContext } from "../CartProvider";
+import { CartContext, CartContextType } from "../CartProvider";
 import { logoutUser } from "@/utils/authUser";
 import SubmitButton from "./SubmitButton";
 interface User {
@@ -14,11 +14,14 @@ interface User {
 }
 const Navbar: React.FC<{ user: User }> = ({ user }) => {
   const [open, setOpen] = useState(false);
-  const cartContext = useContext(CartContext);
+  const cartContext = useContext(CartContext) as CartContextType;
   const { cart } = cartContext;
   const router = useRouter();
   const getTotalCartItems = () => {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalItems = cart.reduce(
+      (sum: number, item: any) => sum + item.quantity,
+      0
+    );
     return totalItems > 0 ? totalItems : null;
   };
   console.log("The user is : ", user);
@@ -95,11 +98,7 @@ const Navbar: React.FC<{ user: User }> = ({ user }) => {
                 leaveTo="translate-x-full"
               >
                 <div className="relative w-screen max-w-md">
-                  <Cart
-                    user={user}
-                    cart={cart}
-                    onClose={() => setOpen(false)}
-                  />
+                  <Cart user={user} onClose={() => setOpen(false)} />
                 </div>
               </Transition.Child>
             </div>

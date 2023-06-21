@@ -1,35 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-
+import { Product, Item, Order } from "../../types";
 interface PopupModalProps {
   isOpen: boolean;
   onClose: () => void;
-  order?: Order | null;
+  order: Order | null;
   buttonText: string;
-}
-
-interface Order {
-  id: string;
-  customerId: string;
-  phone: string;
-  items: OrderItem[];
-  totalPrice: string;
-  status: string;
-  totalProduct: number;
-}
-
-interface OrderItem {
-  product: Product;
-  quantity: number;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  href: string;
-  imageSrc: string;
-  imageAlt: string;
-  price: string;
-  color: string;
 }
 
 const OrderPopupModal: React.FC<PopupModalProps> = ({

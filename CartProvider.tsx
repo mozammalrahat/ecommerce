@@ -1,31 +1,23 @@
 import React from "react";
-
+import { CartProduct } from "./types";
 export interface CartContextType {
-  cart: Product[];
+  cart: CartProduct[];
   dispatch: React.Dispatch<Action>;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  price: string;
-  imageSrc: string;
-  quantity?: number;
 }
 
 interface Action {
   type: string;
-  payload: Product;
+  payload?: CartProduct;
 }
 
-const initialState: Product[] = [];
+const initialState: CartProduct[] = [];
 
-const cartReducer = (state: Product[], action: Action) => {
+const cartReducer = (state: CartProduct[], action: Action) => {
   switch (action.type) {
     case "ADD_TO_CART":
       console.log("Dispatched action: ", action.payload);
       const existingProductIndex = state.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item.id === action.payload?.id
       );
       if (existingProductIndex !== -1) {
         const updatedCart = [...state];
@@ -35,7 +27,7 @@ const cartReducer = (state: Product[], action: Action) => {
         return [...state, { ...action.payload, quantity: 1 }];
       }
     case "REMOVE_FROM_CART":
-      return state.filter((item) => item.id !== action.payload.id);
+      return state.filter((item) => item.id !== action.payload?.id);
     case "CLEAR_CART":
       return [];
     default:
