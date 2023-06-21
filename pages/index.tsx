@@ -26,7 +26,7 @@ const Home: React.FC<{ user: User }> = ({ user }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  console.log("The user is : ", user);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetchProducts();
@@ -36,8 +36,8 @@ const Home: React.FC<{ user: User }> = ({ user }) => {
     try {
       const { data } = await axios.get("/api/products");
       setProducts(data.products);
-    } catch (error) {
-      console.log("Error fetching products:", error);
+    } catch (error: any) {
+      setError(error.message);
     }
   };
 
@@ -56,6 +56,7 @@ const Home: React.FC<{ user: User }> = ({ user }) => {
       {selectedProduct === null && (
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+            {error && <p className="text-red-500">{error}</p>}
             {products.map((product) => (
               <Product
                 key={product.id}

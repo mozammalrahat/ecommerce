@@ -14,9 +14,8 @@ interface summaryProps {
   summary: summaryDetails;
 }
 
-
 const Admin: React.FC = () => {
-  const [summary, setSummary] = React.useState<summaryDetails | {}>({});
+  const [summary, setSummary] = React.useState<summaryProps | {}>({});
   useEffect(() => {
     const getSummary = async () => {
       const { data } = await axios.get("http://localhost:3000/api/summary");
@@ -25,7 +24,6 @@ const Admin: React.FC = () => {
     getSummary();
   }, []);
 
-  
   return (
     <div className="bg-gray-200 min-h-screen p-8">
       <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
