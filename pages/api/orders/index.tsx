@@ -25,6 +25,8 @@ type Order = {
   name: string;
   address: string;
   cart: Product[];
+  totalPrice?: number;
+  totalQuantity?: number;
 };
 
 export default async function handler(
