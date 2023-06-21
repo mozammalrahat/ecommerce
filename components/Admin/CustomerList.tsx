@@ -111,7 +111,7 @@ const CustomersList: React.FC = () => {
               onChange={(e) => onFieldChange(e)}
               name="password"
               placeholder="Password"
-              type="text"
+              type="password"
               className="border border-gray-300 rounded px-4 py-2 mb-2"
             />
           </div>
